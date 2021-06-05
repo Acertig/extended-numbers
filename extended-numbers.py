@@ -7,9 +7,10 @@ class ExtendedNumber(AutoAttributeSetter):
 
     CONVERSIONS = {"k" : 3, "M" : 6, "B" : 9, "T" : 12}
 
-    def __init__(self, number : int, precision : int = 1): 
+    def __init__(self, number, **kwargs): 
         self.__number = number
-        self.__precision = precision
+        self.__precision = kwargs.get("precision", 1)
+        self.__instanceable = kwargs.get("instanceable", False)
         self.__exnumber = __class__.convert(str(self.__number), self.__precision)
 
     def __str__(self) -> str: 
@@ -32,3 +33,5 @@ class ExtendedNumber(AutoAttributeSetter):
             to_return = str(round(0.001 * int(number), 4)) + "k"
             to_return = to_return if not negative else "-" + to_return
             return to_return
+       
+# Example use : number = ExtendedNumber(450, precision = 3, instanceable = True)
