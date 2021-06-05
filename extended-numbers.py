@@ -17,10 +17,12 @@ class ExtendedNumber(AutoAttributeSetter):
         return self.__exnumber
 
     @staticmethod
-    def convert(number : str, precision : int) -> str:
+    def convert(number : str, precision : int, negative : bool = False) -> str:
         props = None
+        negative = negative if number[0] != "-" else True
+        number = number if number[0] != "-" else f"{number[1::]}"
         for conversion, digit in __class__.CONVERSIONS.items(): 
-            lenght = len(number)
+            lenght = len(number) 
             if lenght > digit: 
                 props = (lenght, digit, conversion) 
         if props: 
@@ -28,4 +30,6 @@ class ExtendedNumber(AutoAttributeSetter):
             before, after = (number[0:diff], number[diff:diff + precision])
             return before + "." + after + props[2]
         else: 
-            return str(round(0.001 * int(number), 4)) + "k"
+            to_return = str(round(0.001 * int(number), 4)) + "k"
+            to_return = to_return if negative == False else "-" + to_return
+            return to_return
