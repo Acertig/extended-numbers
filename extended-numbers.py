@@ -1,5 +1,5 @@
 
-class AutoAttributeSetter():
+class AutoAttributeSetter:
     def __setattr__(self, attr, value): 
         if not (getattr(self, attr, value) and callable(value) and attr.startswith("__")): 
             super().__setattr__(attr, value)
