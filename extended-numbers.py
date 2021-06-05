@@ -31,5 +31,5 @@ class ExtendedNumber(AutoAttributeSetter):
             return before + "." + after + props[2]
         else: 
             to_return = str(round(0.001 * int(number), 4)) + "k"
-            to_return = to_return if negative == False else "-" + to_return
+            to_return = to_return if not negative else "-" + to_return
             return to_return
