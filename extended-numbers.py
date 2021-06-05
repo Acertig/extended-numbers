@@ -28,4 +28,4 @@ class ExtendedNumber(AutoAttributeSetter):
             before, after = (number[0:diff], number[diff:diff + precision])
             return before + "." + after + props[2]
         else: 
-            return str(0.001 * int(number)) + "k"
+            return str(round(0.001 * int(number), 4)) + "k"
