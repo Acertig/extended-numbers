@@ -1,4 +1,3 @@
-
 class AutoAttributeSetter:
     def __setattr__(self, attr, value): 
         if not (getattr(self, attr, value) and callable(value) and attr.startswith("__")): 
@@ -17,9 +16,9 @@ class ExtendedNumber(AutoAttributeSetter):
         return self.__exnumber
 
     @staticmethod
-    def convert(number : str, precision : int, negative : bool = False) -> str:
+    def convert(number : str, precision : int) -> str:
         props = None
-        negative = negative if number[0] != "-" else True
+        negative = False if number[0] != "-" else True
         number = number if number[0] != "-" else f"{number[1::]}"
         for conversion, digit in __class__.CONVERSIONS.items(): 
             lenght = len(number) 
