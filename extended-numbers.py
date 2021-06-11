@@ -11,9 +11,19 @@ class ExtendedNumber(AutoAttributeSetter):
         self.__number = number
         self.__precision = kwargs.get("precision", 1)
         self.__instanceable = kwargs.get("instanceable", False)
-        self.__exnumber = __class__.convert(str(self.__number), self.__precision)
+        self.__exnumber = None
+        self.__update_exnumber()
 
-    def __str__(self) -> str: 
+    def __add__(self, other : int): 
+        if self.__instanceable:
+            return ExtendedNumber(self.__number + other, precision = self.__precision, instanceable = self.__instanceable) 
+        self.__number += other
+        self.__update_exnumber()
+        return self
+    
+    __radd__ = __add__
+
+    def __str__(self : int) -> str: 
         return self.__exnumber
 
     @staticmethod
@@ -33,5 +43,12 @@ class ExtendedNumber(AutoAttributeSetter):
             to_return = str(round(0.001 * int(number), 4)) + "k"
             to_return = to_return if not negative else "-" + to_return
             return to_return
-       
+
+    def __update_exnumber(self) -> None:
+        self.__exnumber = self.convert(str(self.__number), self.__precision)
+
+    def custom_conversions(self, custom_conversions : dict) -> None:
+        self.__class__.CONVERSIONS = custom_conversions
+        self.__update_exnumber()
+
 # Example use : number = ExtendedNumber(450, precision = 3, instanceable = True)
